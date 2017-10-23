@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Session 8</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div id="app" class="container mt-4">
+      <div class="card bg-info text-light mb-4">
+        <div class="clearfix card-body">
+          <img :src="photo" class="img-thumbnail border-info bg-dark float-left mr-4" width="150" />
+          <h1>
+            {{ fullName }}
+          </h1>
+          <p class="lead">
+            {{ description }}
+          </p>
+        </div>
+        <div class="card-footer text-right">
+          <a :href="'mailto:'+mail" class="btn btn-lg btn-light float-left col-12 col-sm-auto mb-2  mb-sm-0">
+            <i class="fa fa-envelope-o"></i>
+            Contactez moi
+          </a>
+          <a :href="'https://twitter.com/'+twitter" class="btn btn-lg btn-light col-12 col-sm-auto mb-2 mb-sm-0">
+            <i class="fa fa-twitter"></i>
+            Twitter
+          </a>
+          <a :href="'https://github.com/'+github" class="btn btn-lg btn-light col-12 col-sm-auto">
+            <i class="fa fa-github"></i>
+            Github
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-8">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="m-0">Experiences</h3>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" v-for="experience in experiences">
+                <div class="clearfix">
+                  <span class="badge badge-dark float-right" v-if="experience.dateEnd">
+                    {{ experience.dateBegin }} - {{ experience.dateEnd }}
+                  </span>
+                  <span class="badge badge-dark float-right" v-else>
+                    {{ experience.dateBegin }}
+                  </span>
+                  <h5>{{ experience.name }}</h5>
+                </div>
+                <p class="lead text-muted">
+                  {{ experience.title }}
+                </p>
+                <p>
+                  {{ experience.description }}
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="card my-4">
+            <div class="card-header">
+              <h3 class="m-0">Formation</h3>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" v-for="formation in formations">
+                <div class="clearfix">
+                  <span class="badge badge-dark float-right" v-if="formation.dateEnd">
+                    {{ formation.dateBegin }} - {{ formation.dateEnd }}
+                  </span>
+                  <h5>{{ formation.university }}</h5>
+                </div>
+                <p class="lead text-muted">
+                  {{ formation.name }}
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="card">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <h5>Languages</h5>
+                <ul>
+                  <li v-for="language in languages">
+                    {{ language }}
+                  </li>
+                </ul>
+              </li>
+              <li class="list-group-item">
+                <h5>Technologies</h5>
+                <ul class="list-inline">
+                  <li class="list-inline-item badge badge-warning" v-for="skill in skills">
+                    {{ skill }}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="https://use.fontawesome.com/9b661946a4.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

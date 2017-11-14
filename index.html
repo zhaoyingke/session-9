@@ -8,33 +8,46 @@
 
   <style type="text/css">
     main {
-      height: calc(100vh - 56px);
+      height: calc(100vh - 56px); /* Permet à la carte d'être au centre de l'écran. */
     }
     main[v-cloak] {
-      display: none !important;
+      display: none !important; /* Permet de ne rien afficher avant la fin du chargement */
     }
     main .card {
-      width: 40rem;
+      width: 45rem;
     }
   </style>
 </head>
 
 <body>
   <div id="app" class="container">
+
+    <!-- Header -->
     <nav class="navbar navbar-light bg-light">
       <span class="navbar-brand mb-0 h1">Code ton quiz</span>
     </nav>
 
+    <!-- Carte principale -->
     <main class="d-flex align-items-center justify-content-md-center" v-cloak>
       <div class="card">
+
+        <!-- Carte lorsqu'il y a des questions -->
         <div class="card-body" v-if="current < quiz.length">
           <h4 class="card-title">{{ step.question }}</h4>
+
+          <!-- Boutons pour les QCM -->
           <button v-if="step.choices" v-for="choice in step.choices" class="btn btn-lg btn-block" :class="buttonClasses(choice)" v-on:click="submitButton(choice)" :disabled="success === false">{{ choice }}</button>
+
+          <!-- Champ de saisie pour les réponses libres -->
           <input type="text" ref="textInput" v-if="!step.choices" class="form-control" :class="{'is-valid': success === true, 'is-invalid': success === false}" placeholder="Écrivez votre réponse" v-on:keyup.enter="submitText()"  :disabled="success === false">
+
+          <!-- Résultat -->
           <p class="lead mt-2" v-if="success === true">Bien vu !</p>
           <p class="lead mt-2" v-if="success === false">Raté ! <span v-if="!step.choices">La réponse était {{ step.answer }}</span></p>
           <button class="btn btn-dark btn-lg btn-block" v-if="success !== null" v-on:click="nextQuestion">Prochaine question</button>
         </div>
+
+        <!-- Carte lorsque toutes les questions ont été complétées -->
         <div class="card-body" v-if="current == quiz.length">
           <h4 class="card-title">Vous avez terminé !</h4>
           <p class="card-text">Votre score est de {{ score }}/{{ quiz.length }}</p>
@@ -43,7 +56,7 @@
     </main>
   </div>
   <script src="https://unpkg.com/vue"></script>
-  <script src="./quiz.js"></script>
+  <script src="./quiz.js"></script> <!-- Ce script contient toutes les questions du quiz -->
   <script src="./app.js"></script>
 </body>
 

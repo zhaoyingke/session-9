@@ -1,88 +1,94 @@
-# session-8
-Javascript : séparer mise en forme, template, logique et données
+# session-9
+Javascript : coder la logique d'une application
 
-# Positionnement en flexbox, let's play
+Vous savez coder un site web. Ou plutôt, vous savez afficher des éléments sur une page web, les positionner, leur appliquer un style, et même séparer vos styles, votre template, et votre contenu.
 
-Le positionnement en CSS est complexe. C'est pour cela que l'utilisation d'un framework CSS et d'une grille est recommandée. Mais depuis peu, les designers web ont un nouvel outil à leur disposition : Flexbox.
+En revanche, vous ne savez pas encore utiliser les actions de l'utilisateur, et les transformer en modifications sur la page. Pour cela, il vous faut coder **la logique de l'application**.
 
-Ce sont de nouvelles propriétés CSS qui modifient la façon de voir les blocs, en permettant des alignements réguliers en 2D, avec une gestion automatique des espacements.
+Tout se fait en javascript, et Vue.js va nous aider.
 
-Bootstrap v4 utilise Flexbox. Pour mieux comprendre les possibilités, réalisez les 10 premiers exercice de ce petit jeu : [Flexbox Froggy](http://flexboxfroggy.com/)
+# Petits rappels utiles
 
-# Javascript
+## Variables et conditions
 
-Si on récapitule ce que l'on a appris : 
+Une **variable javascript** s'écrit comme ceci : `var maVariable = 1;`
 
-- HTML : la structure de la page
-- CSS : la mise en forme
+Si je veux vérifier que maVariable contient bien la valeur 1, je peux écrire cette condition : 
 
-Cela permet une séparation du contenu et de la mise en forme. Mais il manque une brique : la logique, ou l'interactivité.
-
-Pour l'interactivité, nous allons ajouter un 3ème langage : le Javascript.
-
-Le Javascript s'écrit : 
-- soit dans la page .html entre des balises `<script></script>`
-- soit dans un fichier séparé nommé par exemple `app.js` et appelé depuis le HTML de la manière suivante : 
-`<script src="./app.js"></script>`
-
-## Comment ça marche ?
-
-Lorsqu'on visite une page web, le navigateur charge les éléments dans leur ordre d'apparition dans le code HTML.
-
-Généralement, cela donne : 
-
-1. Les feuilles de styles CSS
-2. Le contenu HTML
-3. Les scripts Javascript
-
-Pour modifier la page, le Javascript va cibler un ou plusieurs éléments grâce à leur nom, à leur identifiant, ou à leurs classes.
-
-En Vanilla Javascript, cela donne : 
 ```js
-	document.getElementById('monparagraphe').textContent = 'Un nouveau contenu';
+if (maVariable === 1) {
+  /* Éxécuter quelque chose ici */
+}
 ```
 
-Avec JQuery, une collection d'outils très utiles pour le Javascript, cela donne : 
+Je peux même définir une action si maVariable ne contient pas la valeur 1 : 
+
 ```js
-	$('#monparagraphe').text('Un nouveau contenu');
+if (maVariable === 1) {
+
+} else {
+  /* Éxécuter quelque chose ici
+}
 ```
 
-## Mais si on écrit dans le Javascript, cela ne casse t-il pas la séparation entre le contenu, la logique et la mise en forme ?
+Cela s'appelle **une condition**.
 
-Si. C'est pourquoi nous allons également séparer le contenu de la structure, et utiliser un framework Javascript : Vue.js
+## Fonctions
 
-Ainsi, notre application web moderne aura 4 composants : 
+Une **fonction** permet d'éxécuter un ensemble d'instruction, et éventuellement renvoie une valeur. Elle peut prendre en paramètre des **arguments**, mais c'est optionnel.
 
-- index.html : La structure, ou template, en HTML
-- styles.css : Nos styles personnalisés en CSS
-- app.js : La logique de notre application, en Javascript
-- Les données : Le contenu de l'application, en JSON ou dans un objet dans le Javascript
+```js
+function somme(number1, number2) {
+	return number1 + number2;
+}
 
-Vue.js fera donc office de lien entre les données, la logique, et le contenu.
-
-Vous pouvez observer le fichier Javascript de ce projet qui reproduit le CV fait la semaine dernière. Un objet `data` contient tout le contenu de notre CV.
-
-Dans le fichier HTML, au lieu d'y trouver du texte, il y a des références à l'objet `data`.
-
-```vue
-<p>{{ name }}</p>
+var maVariable = somme(2, 3);
 ```
 
-Il y a également beaucoup moins de code, car là où un élément était répété, il y a maintenant une boucle sur un tableau javascript.
+```js
+function eteindreLaLumiere() {
+	/* Ensemble d'instructions pour éteindre la lumière */
+}
 
-```vue
-<ul>
-	<li v-for="skill in skills">{{ skill }}</li>
-</ul>
+eteindreLaLumiere();
 ```
 
-En guise d'exercice, forkez ce projet et personnalisez le CV avec votre profil. Si vous supprimez ou ajoutez des éléments de tableaux (expérience ou formation), le markup HTML sera automatiquement ajouté.
+# Avec Vue
 
-Désormais, vous pouvez travailler le côté éditorial et le côté développement de façon séparée.
+Avec Vue.js, il est possible de définir des **conditions** et des **fonctions** dans le code HTML. Normalement, cela devrait être une mauvaise pratique. Mais puisque Vue est un framework **réactif**, c'est à dire qui maintient constamment les conditions et les fonctions à jour, cela va nous être utile.
 
-Par exemple, ajoutez un logo pour chaque expérience et formation.
+```html
+<button v-if="maVariable === 1">Mon Bouton</button> <!-- Ce bouton ne s'affiche que quand maVariable est égale à 1 -->
 
-1. Dans le fichier app.js, ajoutez une propriété `logo: 'lemonde.jpg'` pour chaque "item" des deux tableaux
-2. Dans le fichier HTML, ajoutez une image `<img class="img-fluid" :src="experience.logo">` dans chacune des deux boucles
+<button v-on:click="maVariable = 2">Éteindre la lumière</button> <!-- Ce bouton modifiera la valeur de maVariable à 2 lorsqu'il sera cliqué -->
 
-Et le tour est joué
+<button v-on:click="eteindreLaLumiere">Éteindre la lumière</button> <!-- Ce bouton lancera la fonction eteindreLaLumiere lorsqu'il sera cliqué. -->
+```
+
+Mais pour que cela marche, il faut écrire le code dans Vue au bon endroit. Encore une fois, **la vie est plus simple quand on lit la documentation**.
+
+```js
+var app = new Vue({
+  el: '#app',
+  data: { /* Ceci est l'endroit où je peux définir mes variables. Elles deviennent en fait des propriétés */
+    maVariable: 1,
+    maSecondeVariable: 2,
+    monObjet: {
+     maVariable: 3
+    }
+  },
+  computed: { /* Ceci est l'endroit où je peux définir des variables calculées. Elles sont constamment réactualisées. */
+    maTroisiemeVariable: function maTroisiemeVariable() {
+    	return this.maVariable + this.maSecondeVariable;
+    }
+  },
+  methods: { /* Ceci est l'endroit où je peux définir des actions à exécuter */
+    eteindreLaLumiere: function eteindreLaLumiere() {
+      /* Toujours pas éteinte cette lumière ? */
+    },
+    somme(value1, value2) {
+    	return value1 + value2;
+    }
+  }
+});
+```

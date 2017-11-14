@@ -22,4 +22,4 @@ var quiz = [
     question: "Écris la valeur de la variable resultat. var resultat = 1 * 2 + '1'",
     answer: "21"
   }
-]
+];

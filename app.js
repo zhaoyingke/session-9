@@ -1,18 +1,20 @@
 var app = new Vue({
   el: '#app',
   data: {
-    current: 0,
-    success: null,
-    quiz: quiz,
-    score: 0
+    quiz: quiz, // Références aux questions du quiz
+    current: 0, // Numéro de la question en cours
+    success: null, // null si pas de réponse, true si succès, false si erreur
+    score: 0 // Incrémentation du score final
   },
   computed: {
     step: function step () {
+      // Renvoie l'objet de la question en cours
       return this.quiz[this.current];
     }
   },
   methods: {
     submitButton: function submitButton (answer) {
+      // Modifie la propriété succès en fonction de la réponse (QCM)
       var correction = this.step.choices[this.step.answer];
       if (answer === correction) {
         this.success = true;
@@ -21,6 +23,7 @@ var app = new Vue({
       }
     },
     submitText: function submitText () {
+      // Modifie la propriété succès en fonction de la réponse (réponse libre)
       var answer = this.$refs.textInput.value;
       var correction = this.step.answer;
       if (answer === correction) {
@@ -30,11 +33,14 @@ var app = new Vue({
       }
     },
     nextQuestion: function nextQuestion () {
+      // Incrémente le score, réinitialise la propriété succès, passe à la question suivante
       if (this.success) this.score++;
       this.success = null;
       this.current++;
     },
     buttonClasses: function buttonClasses (value) {
+      // Renvoie les classes pour colorer les bouttons QCM en fonction de la réponse
+      // Ne pas modifier :)
       var correction = this.step.choices[this.step.answer];
       if (this.success === true) {
         if (correction === value) {

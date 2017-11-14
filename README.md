@@ -74,10 +74,10 @@ var app = new Vue({
     maVariable: 1,
     maSecondeVariable: 2,
     monObjet: {
-     maVariable: 3
+     value: 4
     }
   },
-  computed: { /* Ceci est l'endroit où je peux définir des variables calculées. Elles sont constamment réactualisées. */
+  computed: { /* Ceci est l'endroit où je peux définir des variables dynamiques. Elles sont constamment réactualisées. */
     maTroisiemeVariable: function maTroisiemeVariable() {
     	return this.maVariable + this.maSecondeVariable;
     }
@@ -91,4 +91,21 @@ var app = new Vue({
     }
   }
 });
+```
+
+Remarque importante : dans les fonctions computed et methods, **le mot-clé this** est une référence à l'objet Vue. Il contient toutes les propriétés de data, toutes les propriétés dynamiques de computed, et toutes les fonctions de methods.
+
+Dans mon code HTML, je peux donc écrire ceci : 
+
+```html
+<html>
+  <head></head>
+  <body>
+  	<div id="app">
+  		<div>1 + 2 = {{ somme(1, 2) }}</div>
+  		<div v-if="maTroisiemeVariable === 3">Ma troisième variable égale 3</div>
+  		<button v-on:click="maVariable = 2">Click</button>
+  	</div>
+  </body>
+</html>
 ```

@@ -20,12 +20,15 @@
 /* C'EST PAS CLARA MAIS YINGKE QUI A PUSHE... MAUVAISE CONNEXION... */
 
   <script>
-    var myage = prompt("What's your age?")
-    if (myage <= 27 && myage >= 12) { alert("Good you can have a youth reduction card")
-  } else if (myage > 65 ) {alert("Hey grandpa you're good to take a senior reduction card")}
-    else if (myage < 12) {alert("hey kiddo go to your ma")}
-    else {alert("oops it seems you ain't good for nothing")}  
+   function disccard(myage) {
+    if (myage <= 27 && myage >= 12) { return"Good you can have a youth discount card"} 
+    else if (myage > 65 ) {return "Hey grandpa you're good to take a senior discount card"}
+    else if (myage < 12) {return"hey kiddo go to your ma"}
+    else {return"oops it seems you ain't good for nothing"}  
+  }
+alert(disccard(prompt("how old are you")))
   </script>
+
 </head>
 
 <body>
